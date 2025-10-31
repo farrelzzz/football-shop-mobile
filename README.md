@@ -58,7 +58,11 @@ Widget MaterailApp merupakan widget bawaan flutter yang bisa menjadi wrapper unt
 | Fungsi | Cocok untuk widget yang tidak berubah-ubah (statis) seperti teks dan ikon | Cocok untuk widget yang interaktif, berubah-ubah, atau perlu diperbarui, seperti form dan checkbox|
 
 ### Apa Itu BuildContext dan Kenapa Itu Penting di Flutter Serta Bagaimana Penggunaannya di Metode Build  
-BuildContext adalah handle atau referensi ke lokasi widget tertentu dalam widget tree Flutter, 
+BuildContext adalah handle atau referensi ke lokasi widget tertentu dalam widget tree Flutter. BuildContext memungkinkan widget mengakses sumber daya, data, dan layanan yang diwariskan atau berada di atasnya dalam widget tree. Berikut hal-hal yang membuat BuildContext penting:
+* BuildContext memungkinkan widget mengakses data yang diwariskan dari widget induk yang jauh, seperti mengakses ThemeData (warna, gaya teks, dll) atau MediaQueryData (ukuran layar, orientasi, dll).
+* BuildContext diperlukan untuk menemukan dan berinteraksi dengan widget tingkat tinggi, seperti Navigator untuk berpindah halaman atau ScaffoldMessenger untuk menampilkan Snackbar.
+* Karena setiap widget memiliki BuildContext, maka BuildContext ini tetap melekat pada lokasi widget di widget tree, meskipun widget itu diganti dengan widget baru yang tipe-nya sama.
+Contoh penggunaan BuildContext di method build() ada di aplikasi ini di bagian menu.dart dan main.dat. Di dalam widget MyHomePage (menu.dart), terlihat kita bisa mengambil warna tema aplikasi untuk dipakai sebagai warna latar belakang AppBar, meskipun warna tema aplikasinya ditentukan di file main.dart. Itu terjadi karena parent dari MyHomePage ada di main.dart dan parent tersebut menggunakan build() dengan BuildContext sebagai argumen pertamanya  
 
 ### Apa Itu Hot Reload di Flutter dan Bagaimana Bedanya Dengan Hot Restart
 * Hot Reload: memuat perubahan kode ke VM, membuat widget tree baru, tapi tetap memertahankan state aplikasi (tidak menjalankan ulang main() atau initState()). Bisa dilakukan dengan menekan Ctrl + F5
