@@ -24,10 +24,41 @@ InheritedWidget memungkinkan Parent menyediakan data yang dapat diakses oleh chi
 Misal ketika Parent di-rebuild, Parent bisa memilih apakah Child perlu di-rebuild juga atau tidak.
 
 ### Widget yang Digunakan Dalam Proyek Ini
+* Bawaan Flutter
+  * **`Widget`**: abstract class yang diwarisi semua objek yang ditampilkan.
+  * **`StatelessWidget`**: membuat widget yang tetap (tidak berubah karena suatu aksi), hanya bergantung pada konfigurasi awal saat ia dibuat.
+  * **`MaterialApp`**: wrapper untuk semua Widget yang digunakan dan menyediakan fitur Material Dasar, seperti routing, tema, dan struktur aplikasi. 
+  * **`Scaffold`**: menyediakan struktur visual dasar untuk layar, mendefinisikan bagian-bagian umum seperti AppBar (header), body (isi aplikasi), dan Drawer (navigasi di samping).
+  * **`Container`**: mengatur dekorasi (warna latar, batas, border radius, bayangan, dll) dan layout (padding, margin, batasan ukuran, dll) untuk widget anaknya.
+  * **`Column`**: mengatur daftar widget anak-anaknya secara vertikal, perlu properti children (daftar widget).
+  * **`Center`**: memastikan widget anaknya berada di tenagh-tengah ruang yang disediakan untuknya.
+  * **`Padding`**: memberi jarak kosong di sekitar widget anaknya, jarak tersebut diatur dengan onjek EdgeInsets.
+  * **`SizedBox`**: memberi ruang kosong dengan ukuran tertentu untuk widget anaknya.
+  * **`GridView`**: mengatur letak widget anak-anaknya dalam layout dua dimensi.
+  * **`AppBar`**: widget yang ada di atas Scaffold, biasanya menampilkan judul halaman dan navbar.
+  * **`Text`**: menampilkan teks yang tampilannya bisa diatur lewat properti style yang mengambil objek TextStyle.
+  * **`Icon`**: menampilkan ikon yang diambil dari set ikon yang ada (misal dari Material Icons) menggunakan objek IconData.
+  * **`Card`**: membuat sebuah Material Design (card) yang sudutnya sedikit bundar, punya elevasi (bayangan ringan), punya efek "mengambang", dan bertugas mengelompokkan konten-konten tertentu.
+  * **`InkWell`**: membuat widget anaknya dapat diklik dan memiliki efek ripple (gelombang) khas Material Design saat diesntuh, sehingga widget anaknya jadi lebih interaktif. 
+* Hasil Kustom
+  * **`MyHomePage`**: menampilkan halaman utama di app
+  * **`ItemHomePage`**: menyimpan atribut-atribut dari card dan button yang akan ditampilkan di MyHomePage
+  * **`InfoCard`**: membuat card yang akan ditampilkan di MyHomePage
+  * **`ItemCard`**: menampilkan button yang dibuat untuk MyHomePage 
 
 ### Fungsi Dari Widget MaterialApp dan Kenapa itu Sering Digunakan Sebagai Widget Root  
-Widget MaterailApp merupakan widget bawaan flutter yang bisa menjadi wrapper untuk Widget Material lainnya. Lalu, MaterialApp sering digunakan sebagai widget root karena lewat MaterialApp, kita bisa mengakses komponen dan widget lain yang disediakan oleh flutter SDK, seperti Text, DropdownButton, AppBar, Scaffold, LictView, StatetlessWidget, StatefulWidget, IconButton, dan lain-lain. Sehingga, aplikasi yang kita buat bisa menjadi lebih menarik.
+Widget MaterailApp merupakan widget bawaan flutter yang bisa menjadi wrapper untuk semua Widget yang digunakan dan menyediakan fitur Material Design dasar, seperti routing (navigasi antar halaman), tema, dan struktur aplikasi. Lalu, MaterialApp sering digunakan sebagai widget root karena lewat MaterialApp, kita bisa mengakses komponen dan widget lain yang disediakan oleh flutter SDK, seperti Text, DropdownButton, AppBar, Scaffold, LictView, StatetlessWidget, StatefulWidget, IconButton, dan lain-lain. Sehingga, aplikasi yang kita buat bisa menjadi lebih menarik.
 
-### Perbedaan StatelessWidget dan StatefulWidget Serta Kapan Harus Memilih yang Mana
+### Perbedaan StatelessWidget dan StatefulWidget Serta Kapan Harus Memilih yang Mana  
+| Perbedaan	 | StatelessWidget	 | StatefulWidget |
+| :--- | :--- | :--- |
+| Perubahan | Tidak punya variabel internal yang dapat mengubah dirinya (tidak bisa berubah secara mandiri). Perubahan hanya bisa dilakukan jika widget parent-nya di-rebuild dan memberikan data konfigurasi yang berbeda | Bisa berubah secara mandiri melalui `setState()`, bisa berubah juga kalau parent-nya berubah |
+| Properti | Semua properti harus `final` (immuteable) | Kelas Widget-nya `final`, tapi kelas `State`-nya punya variabel yang bisa berubah  |
+| Lifecycle | Hanya punya satu metode `build()` | Punya beberapa metod lifecycle, seperti `initState()`, `didChangeDependencies()`, `dispose()` untuk mengelola state selama lifetime-nya dia |
+| Fungsi | Cocok untuk widget yang tidak berubah-ubah (statis) seperti teks dan ikon | Cocok untuk widget yang interaktif, berubah-ubah, atau perlu diperbarui, seperti form dan checkbox|
+
 ### Apa Itu BuildContext dan Kenapa Itu Penting di Flutter Serta Bagaimana Penggunaannya di Metode Build
+
 ### Apa Itu Hot Reload di Flutter dan Bagaimana Bedanya Dengan Hot Restart
+* Hot Reload: memuat perubahan kode ke VM, membuat widget tree baru, tapi tetap memertahankan state aplikasi (tidak menjalankan ulang main() atau initState()). Bisa dilakukan dengan menekan Ctrl + F5
+* Hot Restart: memuat perubahan kode ke VM dan me-restart aplikasi Flutter, sehingga state aplikasi hilang. Bisa dilakukan dengan menekan Ctrl + Shift + F5
