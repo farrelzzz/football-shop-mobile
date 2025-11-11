@@ -68,3 +68,18 @@ Contoh penggunaan BuildContext di method build() di aplikasi ini ada di bagian m
 ### Apa Itu Hot Reload di Flutter dan Bagaimana Bedanya Dengan Hot Restart
 * Hot Reload: memuat perubahan kode ke VM, membuat widget tree baru, tapi tetap memertahankan state aplikasi (tidak menjalankan ulang main() atau initState()). Bisa dilakukan dengan menekan Ctrl + F5
 * Hot Restart: memuat perubahan kode ke VM dan me-restart aplikasi Flutter, sehingga state aplikasi hilang. Bisa dilakukan dengan menekan Ctrl + Shift + F5
+
+## Tugas Individu 8  
+
+### Perbedaan `Navigator.push()` dan `Navigator.pushReplacement()`  
+Perbedaannya adalah `Navigator.push()` menambahkan route baru di atas route teratas di stack (route sebelumnya tetap ada di bawah route baru), sedangkan `Navigator.pushReplacement()` menggantikan route teratas yang ada di stack (route teratas tersebut dihapus, tapi route yang ada di bawah route teratas tersebut tetap ada).  
+Dalam aplikasi ini, `Navigator.push()` digunakan pada tombol yang menuju ke halaman untuk menambah produk, tujuannya agar pengguna bisa kembali ke halaman utama setelah menambahkan produk. Lalu, `Navigator.pushReplacement()` digunakan pada tombol yang menuju ke halaman utama, tujuannya agar setelah mengisi form dan kembali ke halaman utama, jika pengguna klik tombol back, maka pengguna tidak diarahkan ke form lagi karena itu sudah tidak relevan. Maksudnya, kalau mau kembali ke halaman form kan bisa saja klik tombol add product.
+
+### Cara memanfaatkan 'Hieararchy Widget' seperti `Scafold`, `AppBar`, dan `Drawer` untuk membangun struktur halaman yang konsisten  
+abc  
+
+### Kelebihan `Padding`, `SingleChildScrollView`, dan `ListView` saat menampilkan elemen-elemen form dalam konteks desain antarmuka 
+abcd  
+
+### Menyesuaikan warna tema agar aplikasi memiliki identitas visual yang konsisten dengan brand toko  
+ahhdhjddsj
