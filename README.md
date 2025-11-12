@@ -76,10 +76,10 @@ Perbedaannya adalah `Navigator.push()` menambahkan route baru di atas route tera
 Dalam aplikasi ini, `Navigator.push()` digunakan pada tombol yang menuju ke halaman untuk menambah produk, tujuannya agar pengguna bisa kembali ke halaman utama setelah menambahkan produk. Lalu, `Navigator.pushReplacement()` digunakan pada tombol yang menuju ke halaman utama, tujuannya agar setelah mengisi form dan kembali ke halaman utama, jika pengguna klik tombol back, maka pengguna tidak diarahkan ke form lagi karena itu sudah tidak relevan. Maksudnya, kalau mau kembali ke halaman form kan bisa saja klik tombol add product.
 
 ### Cara memanfaatkan 'Hieararchy Widget' seperti `Scafold`, `AppBar`, dan `Drawer` untuk membangun struktur halaman yang konsisten  
-abc  
+Scaffold bertindak sebagai kerangka dasar untuk sebuah page. Di dalam Scaffold kita bisa meletakkan AppBar dan Drawer yang kita buat. Dalam aplikasi ini, AppBar tiap page/widget masih berbeda-beda karena Widget AppBar global-nya belum dibuat. Tetapi untuk drawer global sudah dibuat, jadi drawer di setiap page yang ada sudah konsisten.  
 
 ### Kelebihan `Padding`, `SingleChildScrollView`, dan `ListView` saat menampilkan elemen-elemen form dalam konteks desain antarmuka 
-abcd  
+Dalam form yang ada di aplikasi ini, semua input field yang ada dalam form diletakkan di dalam SingleChildScrollView, sehingga input field yang ada tidak overflow saat ditampilkan dan pengguna bisa melakukan scroll untuk mengisi input field yang ada. Padding digunakan untuk memberi jarak antar input field sehingga visualnya jadi lebih rapi. ListView digunakan untuk membangun widget yang terlihat di layar dan beberapa di dekatnya, ini akan sangat berguna jika form memiliki input field yang banyak/panjang. Meski begitu, form di aplikasi ini tidak menggunakan ListView karena input field nya masih sedikit.
 
 ### Menyesuaikan warna tema agar aplikasi memiliki identitas visual yang konsisten dengan brand toko  
-ahhdhjddsj
+Warna utama tema aplikasi ini adalah putih-biru, sudah cukup konsisten dengan brand toko yang sudah dibuat pada versi web. Hanya saja, aplikasi versi web tersebut dibuat dalam tema gelap, sedangkan di versi mobile ini warna-nya masih tema terang. Jadi sejujurnya untuk saat ini masih ada beberapa warna yang belum konsisten. 
