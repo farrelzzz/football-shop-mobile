@@ -65,7 +65,11 @@ class _ProductFormPage extends State<ProductFormPage> {
                   },
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return "Judul tidak boleh kosong!";
+                      return "Nama produk tidak boleh kosong!";
+                    }
+
+                    if (value.length > 100) {
+                      return "Nama produk terlalu panjang";
                     }
                     return null;
                   },
@@ -128,6 +132,9 @@ class _ProductFormPage extends State<ProductFormPage> {
                     if (value == null || value.isEmpty) {
                       return "Deskripsi produk tidak boleh kosong!";
                     }
+                    if (value.length > 500) {
+                      return "Deskripsi produk terlalu panjang";
+                    }
                     return null;
                   },
                 ),
@@ -178,6 +185,15 @@ class _ProductFormPage extends State<ProductFormPage> {
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
                       return "URL thumbnail produk tidak boleh kosong!";
+                    }
+                    if (value.startsWith("https") == false) {
+                      return "URL thumbnail produk tidak valid";
+                    }
+                    if (value.endsWith(".jpg") == false || value.endsWith(".png") == false) {
+                      return "URL thumbnail produk tidak valid";
+                    }
+                    if (value.length > 500) {
+                      return "URL thumbnail produk terlalu panjang";
                     }
                     return null;
                   },
