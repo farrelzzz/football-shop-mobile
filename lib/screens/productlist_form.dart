@@ -189,9 +189,6 @@ class _ProductFormPage extends State<ProductFormPage> {
                     if (value.startsWith("https") == false) {
                       return "URL thumbnail produk tidak valid";
                     }
-                    if (value.endsWith(".jpg") == false && value.endsWith(".png") == false) {
-                      return "URL thumbnail produk tidak valid";
-                    }
                     if (value.length > 500) {
                       return "URL thumbnail produk terlalu panjang";
                     }
