@@ -102,4 +102,13 @@ Sepeerti yang disampaikan sebelumnya, `CookieRequest` digunakan untuk menyimpan 
 
 ### Konfigurasi konektivitas yang diperlukan agar Flutter dapat berkomunikasi dengan Django. Mengapa kita perlu menambahkan 10.0.2.2 pada ALLOWED_HOSTS, mengaktifkan CORS dan pengaturan SameSite/cookie, dan menambahkan izin akses internet di Android? Apa yang akan terjadi jika konfigurasi tersebut tidak dilakukan dengan benar?  
 * Menambahkan 10.0.2.2 pada ALLOWED_HOSTS: Google membuat alamaat 10.0.2.2 di emulator untuk mengakses localhost di komputer, sehingga kalau ada request masuk dan memanggil alamat 10.0.2.2, ia tidak akan diblokir Django.
-* Mengaktifkan CORS dan pengaturan SameSite/cookie: 
+* Mengaktifkan CORS: kita perlu beberapa konfigurasi django-cors-headers agar server mau menerima request yang membawa Cookies atau Session ID dari sumber yang berbeda (beda port/domain).
+*  Pengaturan SameSite/cookie: browser modern bisa menganggap cookie dari HTTP biasa (bukan HTTPS) sebagai sesuatu yang tidak aman. Karena di lokal belum bisa pakai HTTPS, kita set cookie-nya boleh berasal dari HTTTP dan samesite-nya di-set agar mengizinkan cookie dikirim antar domain/port berbeda.
+
+### Mekanisme pengiriman data mulai dari input hingga dapat ditampilkan pada Flutter.  
+Misal input buat tambah produk baru.
+1. Flutter: pengguna mengisi dan submit form, data diformat jadi JSON, lalu (mwnggunakan CookieRequest) dikirim ke URL endpoint Django (dengan method POST) untuk menangani data tersebut.
+2. Django: mengecek alamat yang dituju dan meneruskan request ke fungsi di views untuk tambah produk; membaca request body dan mengubaha data JSON ke Dictionary Python; Django cek apakah datanya valid, jika iya, maka datanya disimpan ke database; lalu mengirim respons yang berisi status sukses atau data baru dibuat(200 OK atau 201 Created).
+3. Flutter: Flutter yang sedang menunggu (await), akhirnya menerima respons dari Django; respons dibaca dan diformat ke model Dart; melakukan state update & UI rebuild untuk menampilkan data terbaru.
+
+##  Mekanisme autentikasi dari login, register, hingga logout. Mulai dari input data akun pada Flutter ke Django hingga selesainya proses autentikasi oleh Django dan tampilnya menu pada Flutter.
