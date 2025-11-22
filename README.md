@@ -83,3 +83,32 @@ Dalam form yang ada di aplikasi ini, semua input field yang ada dalam form dilet
 
 ### Menyesuaikan warna tema agar aplikasi memiliki identitas visual yang konsisten dengan brand toko  
 Warna utama tema aplikasi ini adalah putih-biru, sudah cukup konsisten dengan brand toko yang sudah dibuat pada versi web. Hanya saja, aplikasi versi web tersebut dibuat dalam tema gelap, sedangkan di versi mobile ini warna-nya masih tema terang. Jadi sejujurnya untuk saat ini masih ada beberapa warna yang belum konsisten. 
+
+## Tugas Individu 9  
+
+### Mengapa kita perlu membuat model Dart saat mengambil/mengirim data JSON? Apa konsekuensinya jika langsung memetakan `Map<String, dynamic>` tanpa model (terkait validasi tipe, null-safety, maintainability)?  
+Jadi saat menerima data JSON, `jsonDecode` mengubahnya menjadi `Map<String, dynamic>`. Karena value-nya dynamic, saat kode di-compile, kalau ada tipe data yang tidak sesuai, maka error-nya tidak terdeksi. Maka dari itu, kita membuat model Dart untuk memastikan tipe data yang diterima itu apa, sehingga kalau ada tipe data yang tidak sesuai, error-nya langsung ketahuan saat di-compile, bukan pas run baru ketauan error-nya.  
+Ada beberapa konsekuensi kalau langsung memetakan Map<String, dynamic> tanpa model:  
+* Tidak aada type safety: Misal kita ingin melakukan pertambahan antar integer. Tapi karena tidak ada model, kita tidak bisa memastikan bahwa yang ditambahkan benar-benar integer, bisa saja String dengan integer. Error itu tidak terdeteksi saat compile dan akan menyebabkan error saat runtime.
+* Null-Safety jadi tidak berguna: tanpa model, kita tidak bisa memastikan apakah suatu key itu ada atau tidak, atau nilainya null. Dengan model kita bisa membuat variable itu null-able atau tidak dengan menambahkan tanda tanya di depan tipe data nya.
+* Maintainability nya buruk: kalau kita ingin mengambil suatu value dengan key-nya, terus kita typo pas nulis key, itu bakal menghasilkan null. Kembali ke poin sebelumnya, kalau tidak ada model, null tidak terdeteksi. Kita jadi sulit debugging-nya kalau skala kodenya sudah besar.
+
+### Fungsi package http dan CookieRequest dalam tugas ini dan perbedaan peran http vs CookieRequest.  
+`http` digunakan  untuk mengirim permintaan (GET, POST, PUT, DELETE.) ke server Django. Dia bersifat stateless, dia tidak menyimpan riwayat bahwa user sudah login. Jika dipakai sendirian untuk mengambil data yang butuh login, Django akan menolaknya.  
+`CookieRequest` digunakan untuk mengelola sesi. Dia membungkus fungsi `http` tetapi bisa menyimpan Cookies seperti sessionid dan CSRF token dari Django. Jadi, kalau pengguna sudah login lalu ia membuat request, Django bisa tahu kalau request itu datang dari pengguna yang sudah login.  
+
+### Mengapa instance CookieRequest perlu untuk dibagikan ke semua komponen di aplikasi Flutter.  
+Sepeerti yang disampaikan sebelumnya, `CookieRequest` digunakan untuk menyimpan session/cookies pengguna. Kalau instance-nya tidak dibagikan ke semua komponen, maka dalam setiap halaman, `CookieRequest` baru akan dibuat, sehingga kalau sebelumnya sudah login, kali ini terdeteksi belum login karena ada `CookieRequest` baru yang dibuat.  
+
+### Konfigurasi konektivitas yang diperlukan agar Flutter dapat berkomunikasi dengan Django. Mengapa kita perlu menambahkan 10.0.2.2 pada ALLOWED_HOSTS, mengaktifkan CORS dan pengaturan SameSite/cookie, dan menambahkan izin akses internet di Android? Apa yang akan terjadi jika konfigurasi tersebut tidak dilakukan dengan benar?  
+* Menambahkan 10.0.2.2 pada ALLOWED_HOSTS: Google membuat alamaat 10.0.2.2 di emulator untuk mengakses localhost di komputer, sehingga kalau ada request masuk dan memanggil alamat 10.0.2.2, ia tidak akan diblokir Django.
+* Mengaktifkan CORS: kita perlu beberapa konfigurasi django-cors-headers agar server mau menerima request yang membawa Cookies atau Session ID dari sumber yang berbeda (beda port/domain).
+*  Pengaturan SameSite/cookie: browser modern bisa menganggap cookie dari HTTP biasa (bukan HTTPS) sebagai sesuatu yang tidak aman. Karena di lokal belum bisa pakai HTTPS, kita set cookie-nya boleh berasal dari HTTTP dan samesite-nya di-set agar mengizinkan cookie dikirim antar domain/port berbeda.
+
+### Mekanisme pengiriman data mulai dari input hingga dapat ditampilkan pada Flutter.  
+Misal input buat tambah produk baru.
+1. Flutter: pengguna mengisi dan submit form, data diformat jadi JSON, lalu (mwnggunakan CookieRequest) dikirim ke URL endpoint Django (dengan method POST) untuk menangani data tersebut.
+2. Django: mengecek alamat yang dituju dan meneruskan request ke fungsi di views untuk tambah produk; membaca request body dan mengubaha data JSON ke Dictionary Python; Django cek apakah datanya valid, jika iya, maka datanya disimpan ke database; lalu mengirim respons yang berisi status sukses atau data baru dibuat(200 OK atau 201 Created).
+3. Flutter: Flutter yang sedang menunggu (await), akhirnya menerima respons dari Django; respons dibaca dan diformat ke model Dart; melakukan state update & UI rebuild untuk menampilkan data terbaru.
+
+##  Mekanisme autentikasi dari login, register, hingga logout. Mulai dari input data akun pada Flutter ke Django hingga selesainya proses autentikasi oleh Django dan tampilnya menu pada Flutter.
