@@ -9,14 +9,17 @@ List<ProductEntry> productEntryFromJson(String str) => List<ProductEntry>.from(j
 String productEntryToJson(List<ProductEntry> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class ProductEntry {
-    String id;
     String name;
+    int price;
     String description;
-    Category category;
     String thumbnail;
+    Category category;
+    bool isFeatured;
+    
+    String id;
     int productViews;
     DateTime createdAt;
-    bool isFeatured;
+    int stock;
     int? userId;
 
     ProductEntry({
@@ -29,6 +32,8 @@ class ProductEntry {
         required this.createdAt,
         required this.isFeatured,
         required this.userId,
+        required this.price,
+        required this.stock
     });
 
     factory ProductEntry.fromJson(Map<String, dynamic> json) => ProductEntry(
@@ -41,6 +46,8 @@ class ProductEntry {
         createdAt: DateTime.parse(json["created_at"]),
         isFeatured: json["is_featured"],
         userId: json["user_id"],
+        price: json["price"],
+        stock: json["stock"]
     );
 
     Map<String, dynamic> toJson() => {

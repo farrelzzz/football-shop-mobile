@@ -48,7 +48,7 @@ class NewsEntryCard extends StatelessWidget {
 
                 // Title
                 Text(
-                  news.title,
+                  news.name,
                   style: const TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.bold,
@@ -62,9 +62,9 @@ class NewsEntryCard extends StatelessWidget {
 
                 // Content preview
                 Text(
-                  news.content.length > 100
-                      ? '${news.content.substring(0, 100)}...'
-                      : news.content,
+                  news.description.length > 100
+                      ? '${news.description.substring(0, 100)}...'
+                      : news.description,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(color: Colors.black54),
